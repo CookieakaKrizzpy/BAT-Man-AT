@@ -1,0 +1,4 @@
+# Security: Deny all direct access to config files
+<Files "*">
+    Require all denied
+</Files>

@@ -1,0 +1,75 @@
+{
+  "info": {
+    "name": "BAT-Man Auth API Tests",
+    "description": "Test Collection für den Authentication Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Test 1: Erfolgreicher Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/BAT-Man-AT/src/api/login.php",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["BAT-Man-AT", "src", "api", "login.php"]
+        }
+      }
+    },
+    {
+      "name": "Test 2: Login mit falschem Passwort",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"falsches_passwort\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/BAT-Man-AT/src/api/login.php",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["BAT-Man-AT", "src", "api", "login.php"]
+        }
+      }
+    },
+    {
+      "name": "Test 3: Login mit nicht existierendem User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"nicht_existent\",\n  \"password\": \"test123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/BAT-Man-AT/src/api/login.php",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["BAT-Man-AT", "src", "api", "login.php"]
+        }
+      }
+    }
+  ]
+}
