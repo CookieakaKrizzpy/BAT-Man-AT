@@ -28,10 +28,13 @@ catch (PDOException $e)
         ["status" => "error", "message" => "Verbindungsfehler: " . $e->getMessage()]);     // Fehlermeldung als JSON ausgeben
 }
 
-
 // Anfragemethode prüfen 
-
+if ($_SERVER["REQUEST_METHOD"] === "POST")
+{
 // Eingabedaten prüfen/bereinigen
+    
+}
+
 
 // User suchen 
 
