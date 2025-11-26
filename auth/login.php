@@ -48,6 +48,13 @@ if (!empty($username) && !empty($input_password))
     $user = $stmt -> fetch();
 }
 
-
 // Passwort prüfen
+if ($user && password_verify($input_password, $user["password"]))
+{
+    echo json_encode([
+        "status" => "success",
+        "user_id" => $user["id"],
+        "username" => $user["username"]
+        "message" => "Login erfolgreich"]);
+}
 
