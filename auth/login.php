@@ -30,13 +30,24 @@ catch (PDOException $e)
 
 // Anfragemethode prüfen 
 if ($_SERVER["REQUEST_METHOD"] === "POST")
-{
 // Eingabedaten prüfen/bereinigen
-    
+{
+    $username = isset($_POST["username"]) ?
+        trim($_POST["username"]) : "";
+    $input_password = isset($_POST["password"]) ?
+        $_POST["password"] : "";
+}
+if (!empty($username) && !empty($input_password))
+{
+// User suchen
+    $sql = "SELECT id, username, paasword FROM users WHERE username
+    = :username LIMIT 1";
+    $stmt = $pdo->prepare($sql);
+    $stmt -> execute(["username" => $username]);
+
+    $user = $stmt -> fetch();
 }
 
-
-// User suchen 
 
 // Passwort prüfen
 
