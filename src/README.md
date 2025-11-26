@@ -35,7 +35,7 @@ src/
 └── README.md                  ← Diese Datei
 ```
 
-## 🚀 Setup
+##  Setup
 
 ### 1. Composer installieren
 ```bash
