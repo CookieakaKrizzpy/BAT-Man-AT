@@ -55,6 +55,21 @@ if ($user && password_verify($input_password, $user["password"]))
         "status" => "success",
         "user_id" => $user["id"],
         "username" => $user["username"]
-        "message" => "Login erfolgreich"]);
+        "message" => "Login erfolgreich"
+    ]);
 }
+else
+{
+    echo json_encode([
+        "status" => "failure",
+        "message" => "Ungültiger Benutzername oder Passwort"
+    ]);
+}
+else {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Bitte alle Felder ausfüllen"
+    ]);
+}
+?>
 

@@ -88,7 +88,7 @@ Die API antwortet immer mit einem JSON-Objekt.
 #### ❌ Fehlgeschlagener Login
 ```json
 {
-  "status": "fail",
+  "status": "failure",
   "message": "Benutzername oder Passwort ungültig"
 }
 ```
@@ -129,7 +129,7 @@ var jsonString = await response.Content.ReadAsStringAsync();
 ```
 
 ### PHP Dashboard (cURL)
-Wenn dein Dashboard auf einem anderen Server liegt oder du die API intern aufrufst:
+Wenn Dashboard auf einem anderen Server liegt oder die API intern aufgerufen wird:
 
 ```php
 $ch = curl_init('http://localhost/login_api/login.php');
