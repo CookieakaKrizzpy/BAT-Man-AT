@@ -4,7 +4,7 @@ header ("Content-Type: application/json; charset=UTF-8");                       
 header ("Access-Control-Allow-Origin: *");                                                 // CORS HEADER (falls Dashboard extern ge
 
 // Datenbankverbindung herstellen
-$db_host = "localhost";                                                                    // Datenbank Host
+$db_host = "127.0.0.1";                                                                    // Datenbank Host
 $db_name = "it202407";                                                                     // Datenbank Name
 $db_user = "batman";                                                                       // Datenbank Benutzer
 $db_password = "batman";                                                                   // Datenbank Passwort
@@ -31,7 +31,7 @@ catch (PDOException $e)
 // Anfragemethode prüfen 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {                                              // Nur POST Anfragen erlauben
     echo json_encode(
-        ["status" => "error", "message" => "Nur POST Anfragen erlaubt"]);
+        ["status" => "error", "message" => "Nur POST Anfragen erlaubt". $_SERVER["REQUEST_METHOD"]]);
     exit();
 }
 
