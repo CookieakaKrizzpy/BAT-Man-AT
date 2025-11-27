@@ -28,7 +28,18 @@ catch (PDOException $e)
 }
 
 // Anfragemethode prüfen 
-if ($_SERVER["REQUEST_METHOD"] === "POST")                                                 // Nur POST Anfragen erlauben
+if ($_SERVER["REQUEST_METHOD"] === "POST") {                                              // Nur POST Anfragen erlauben
+    echo json_encode(
+        ["status" => "error", "message" => "Nur POST Anfragen erlaubt"]);
+    exit();
+}
 
+$login_type = isset($_POST["login_type"]) ? $_POST["login_type"] : "Teilnehmer"
 
-
+if ($login_type == "Ausbilder") {
+    require "auth_ausbilder.php";
+}
+else {
+    require "auth_teilnehmer.php";
+}
+?>
