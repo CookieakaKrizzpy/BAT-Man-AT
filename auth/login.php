@@ -6,9 +6,9 @@ header ("Access-Control-Allow-Origin: *");                                      
 
 // Datenbankverbindung herstellen
 $db_host = "localhost";                                                                    // Datenbank Host
-$db_name = "TEST";                                                                         // Datenbank Name
-$db_user = "TEST";                                                                         // Datenbank Benutzer
-$db_password = "";                                                                         // Datenbank Passwort
+$db_name = "it202407";                                                                     // Datenbank Name
+$db_user = "batman";                                                                       // Datenbank Benutzer
+$db_password = "batman";                                                                   // Datenbank Passwort
 
 // Verbindung aufbauen (PDO)
 try
@@ -41,8 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")                                      
     if (!empty($username) && !empty($input_password))                                      // Beide Felder müssen ausgefüllt sein
     {
         // User suchen
-        $sql = "SELECT id, username, password FROM users WHERE username                    // Benutzername suchen
-        = :username LIMIT 1";
+        $sql = "SELECT Reha_Nr, Password_Hash FROM Teilnehmer WHERE username = :username LIMIT 1";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(["username" => $username]);
 
