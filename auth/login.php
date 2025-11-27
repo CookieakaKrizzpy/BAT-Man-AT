@@ -5,10 +5,10 @@ header ("Content-Type: application/json; charset=UTF-8");                       
 header ("Access-Control-Allow-Origin: *");                                                 // CORS HEADER (falls Dashboard extern gehostet wird)
 
 // Datenbankverbindung herstellen
-$db_host = "localhost";                                                                    // Datenbank 192.168.9.123
-$db_name = "TEST";                                                                         // Datenbank it202407
-$db_user = "TEST";                                                                         // Datenbank batman
-$db_password = "";                                                                         // Datenbank batman
+$db_host = "localhost";                                                                    // Datenbank Host
+$db_name = "TEST";                                                                         // Datenbank Name
+$db_user = "TEST";                                                                         // Datenbank Benutzer
+$db_password = "";                                                                         // Datenbank Passwort
 
 // Verbindung aufbauen (PDO)
 try
