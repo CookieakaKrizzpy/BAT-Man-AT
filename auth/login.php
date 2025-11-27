@@ -24,7 +24,8 @@ try
 catch (PDOException $e)
 {
     echo json_encode(
-        ["status" => "error", "message" => "Verbindungsfehler: " . $e->getMessage()]);     // Fehlermeldung als JSON ausgeben
+        ["status" => "error", "message" => "Verbindungsfehler: " . $e->getMessage()]);
+        exit();     // Fehlermeldung als JSON ausgeben
 }
 
 // Anfragemethode prüfen 
