@@ -6,7 +6,7 @@ $vorname = isset($_POST["vorname"]) ? trim($_POST["vorname"]) : "";
 
 if (empty($nachname) || empty($vorname)) {
     echo json_encode([
-        "status" => "error",
+        "status" => "failure",
         "message" => "Bitte Nachname und Vorname angeben"
     ]);
     exit(); 
