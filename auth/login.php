@@ -34,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")                                      
     // Eingabedaten prüfen/bereinigen
     $username = isset($_POST["username"]) ?                                                // Benutzername aus POST Daten holen
         trim($_POST["username"]) : "";
-    $input_password = isset($_POST["password"]) ?                                          // Passwort aus POST Daten holen     
-        $_POST["password"] : "";
+    $input_password = isset($_POST["password"]) ?                                          // Passwort aus POST Daten holen
+        trim($_POST["password"]) : "";
 
     // Prüfen ob Felder leer sind
     if (!empty($username) && !empty($input_password))                                      // Beide Felder müssen ausgefüllt sein
