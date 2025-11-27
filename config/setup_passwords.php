@@ -2,9 +2,9 @@
 
 // Einstellungen & Datenbank-Verbindung
 $db_host = "localhost";
-$db_name = "TEST";
-$db_user = "TEST";
-$db_password = "";
+$db_name = "it202407";
+$db_user = "batman";
+$db_password = "batman";
 
 try {
     $dsn = "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4";                                   // Der DSN (Data Source Name) definiert Typ, Host und Datenbankname.
