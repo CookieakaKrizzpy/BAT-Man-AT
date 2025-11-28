@@ -23,5 +23,23 @@ $sql = "SELECT id, Password_Hash
         WHERE Reha_Nr = :reha_nr
         LIMIT 1";
 
+$stmt = $pdo->prepare($sql);
+$stmt -> execute(["reha_nr" => $reha_nr]);
+$user = $stmt->fetch();
 
+if ($user && password_verify($passwort, $user["Password_Hash"])) {
+
+    echo json_encode([
+        "status" => "success",
+        "role" => "Teilnehmer",
+        "user_id" => $user["id"],
+        "message" => "Login als Teilnehmer erfolgreich"
+    ]);
+
+} else {
+    echo json_encode([
+        "status" => "failure",
+        "message" => "Ungültige Anmeldedaten, Teilnehmer nicht gefunden"
+    ]);
+}
 ?>
