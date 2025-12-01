@@ -1,5 +1,5 @@
 <?php
-<?php
+
 $db_host = "192.168.9.123";
 $db_name = "it202407";
 $db_user = "batman";
