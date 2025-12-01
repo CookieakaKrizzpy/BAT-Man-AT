@@ -25,8 +25,8 @@ try {
     exit();
 }
 
-// Token aus URL/POST holen
-$token = isset($_GET["token"]) ? trim($_GET["token"]) : "";
+// Token aus POST holen (Dashboard sendet per POST)
+$token = isset($_POST["token"]) ? trim($_POST["token"]) : "";
 
 if (empty($token)) {
     echo json_encode([
