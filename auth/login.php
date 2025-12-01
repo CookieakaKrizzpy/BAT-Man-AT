@@ -4,7 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 
 // Datenbankverbindung herstellen
-$db_host = "192.168.9.123";                                                                   // Adresse ändern!
+$db_host = "192.168.9.123";
 $db_name = "it202407";
 $db_user = "batman";
 $db_password = "batman";
@@ -37,10 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $login_type = isset($_POST["login_type"]) ? $_POST["login_type"] : "Teilnehmer";
 
-if ($login_type == "Ausbilder") {
-    require "auth_ausbilder.php";
+// Einbinden der entsprechenden Authentifizierungslogik basierend auf der Rolle
+if ($login_type === "Ausbilder") {
+    require "ausbilder/authenticate.php";
+} else {
+    require "teilnehmer/authenticate.php";
 }
-else {
-    require "auth_teilnehmer.php";
-}
+
 ?>
