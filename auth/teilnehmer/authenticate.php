@@ -24,7 +24,7 @@ if (!is_numeric($reha_nr)) {
 // Als Integer behandeln
 $reha_nr = (int)$reha_nr;
 
-$sql = "SELECT Teilnehmer_ID, Password_Hash
+$sql = "SELECT Teilnehmer_ID, Password_Hash, Erstanmeldung
         FROM Teilnehmer
         WHERE Teilnehmer_ID = :reha_nr
         LIMIT 1";
@@ -56,6 +56,17 @@ else if ($passwort === $user["Password_Hash"]) {
 
 if ($passwordValid) {
     
+    // Prüfen ob Erstanmeldung (Passwort muss geändert werden)
+    if ($user["Erstanmeldung"] == 1) {
+        echo json_encode([
+            "status" => "password_change_required",
+            "user_id" => $user["Teilnehmer_ID"],
+            "message" => "Bitte vergeben Sie ein neues Passwort"
+        ]);
+        exit();
+    }
+    
+    // Normaler Login (Erstanmeldung = 0)
     // Session-Token generieren (30 Minuten gültig)
     $sessionToken = bin2hex(random_bytes(32)); // 64 Zeichen
     $expiresAt = date('Y-m-d H:i:s', strtotime('+30 minutes'));
