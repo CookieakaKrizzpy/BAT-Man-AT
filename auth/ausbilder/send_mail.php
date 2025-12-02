@@ -28,20 +28,157 @@ function sendTokenEmail($to, $token, $geschlecht, $nachname) {
     
     // Email-Inhalt (HTML)
     $message = "
-    <html>
+    <!DOCTYPE html>
+    <html lang='de'>
     <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <title>BAT-Man Login</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f5f5f5;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 600px;
+                margin: 20px auto;
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                overflow: hidden;
+            }
+            .header {
+                background: linear-gradient(135deg, #c41a38 0%, #e74c3c 100%);
+                color: white;
+                padding: 30px 20px;
+                text-align: center;
+            }
+            .header img {
+                max-height: 60px;
+                margin-bottom: 15px;
+            }
+            .header h1 {
+                margin: 0;
+                font-size: 28px;
+                font-weight: 600;
+            }
+            .content {
+                padding: 30px 20px;
+            }
+            .greeting {
+                font-size: 16px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+            .greeting strong {
+                color: #c41a38;
+            }
+            .message {
+                margin: 20px 0;
+                color: #555;
+                line-height: 1.8;
+            }
+            .button-container {
+                text-align: center;
+                margin: 30px 0;
+            }
+            .button {
+                display: inline-block;
+                background: linear-gradient(135deg, #c41a38 0%, #e74c3c 100%);
+                color: white;
+                padding: 14px 32px;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 16px;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(196, 26, 56, 0.3);
+            }
+            .link-text {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-left: 4px solid #c41a38;
+                border-radius: 4px;
+                word-break: break-all;
+                font-size: 13px;
+                color: #666;
+            }
+            .validity {
+                background-color: #fff3cd;
+                border: 1px solid #ffc107;
+                border-radius: 6px;
+                padding: 12px 15px;
+                margin: 20px 0;
+                color: #856404;
+                font-weight: 500;
+            }
+            .footer {
+                background-color: #f5f5f5;
+                padding: 20px;
+                text-align: center;
+                font-size: 12px;
+                color: #999;
+                border-top: 1px solid #eee;
+            }
+            .footer p {
+                margin: 5px 0;
+            }
+            .divider {
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #c41a38, transparent);
+                margin: 25px 0;
+            }
+        </style>
     </head>
     <body>
-        <h2>$anrede $nachname,</h2>
-        <p>Sie haben einen Login für BAT-Man angefordert.</p>
-        <p>Klicken Sie auf den folgenden Link, um sich anzumelden:</p>
-        <p><a href='$link' style='background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;'>Jetzt anmelden</a></p>
-        <p>Oder kopieren Sie diesen Link in Ihren Browser:</p>
-        <p>$link</p>
-        <p><strong>Dieser Link ist 5 Minuten gültig.</strong></p>
-        <hr>
-        <p style='color: gray; font-size: 12px;'>Falls Sie diese Email nicht angefordert haben, ignorieren Sie sie einfach.</p>
+        <div class='container'>
+            <div class='header'>
+                <img src='cid:bfw_logo' alt='BFW Nürnberg Logo' />
+                <h1>BAT-Man Portal</h1>
+            </div>
+            
+            <div class='content'>
+                <div class='greeting'>
+                    <p><strong>$anrede $nachname</strong>,</p>
+                </div>
+                
+                <div class='message'>
+                    <p>Sie haben einen Login für das <strong>BAT-Man Portal</strong> des BFW Nürnberg angefordert.</p>
+                    <p>Klicken Sie auf den folgenden Button, um sich anzumelden:</p>
+                </div>
+                
+                <div class='button-container'>
+                    <a href='$link' class='button'>Jetzt anmelden</a>
+                </div>
+                
+                <p style='text-align: center; color: #999; font-size: 13px;'>oder kopieren Sie diesen Link in Ihren Browser:</p>
+                
+                <div class='link-text'>
+                    $link
+                </div>
+                
+                <div class='validity'>
+                    ⏱️ <strong>Wichtig:</strong> Dieser Link ist nur <strong>5 Minuten</strong> lang gültig. Handeln Sie bitte umgehend.
+                </div>
+                
+                <div class='message' style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;'>
+                    <p style='color: #999; font-size: 13px;'>Falls Sie diese Email nicht angefordert haben, ignorieren Sie sie einfach. Der Link verfällt automatisch nach 5 Minuten.</p>
+                </div>
+            </div>
+            
+            <div class='footer'>
+                <p><strong>BFW Nürnberg</strong> - Zentrum für berufliche Rehabilitation</p>
+                <p>BAT-Man Portal © 2025</p>
+            </div>
+        </div>
     </body>
     </html>
     ";
@@ -77,6 +214,12 @@ function sendTokenEmail($to, $token, $geschlecht, $nachname) {
         $mail->Subject = $subject;
         $mail->Body = $message;
         $mail->CharSet = 'UTF-8';
+        
+        // Embed BFW Logo
+        $logoPath = __DIR__ . '/../assets/icon/Logo_BFW_Nuernberg.svg';
+        if (file_exists($logoPath)) {
+            $mail->addEmbeddedImage($logoPath, 'bfw_logo', 'Logo_BFW_Nuernberg.svg');
+        }
         
         // Timeout setzen
         $mail->Timeout = $mailConfig['timeout'];
