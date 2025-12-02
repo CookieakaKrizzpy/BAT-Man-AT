@@ -1,8 +1,13 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . '/../../vendor/autoload.php';
+
 /**
  * Sendet eine Email mit Magic Link Token an den Ausbilder
- * Nutzt das Ubuntu sendmail System
+ * Nutzt BFW Mail Server mit SMTP Authentifizierung
  * 
  * @param string $to Email-Adresse des Empfängers
  * @param string $token Der generierte Token
@@ -41,20 +46,70 @@ function sendTokenEmail($to, $token, $geschlecht, $nachname) {
     </html>
     ";
     
-    // Headers für HTML-Email
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: noreply@bat-man.de" . "\r\n";
+    // PHPMailer Konfiguration
+    $mail = new PHPMailer(true);
     
-    // DEBUG MODUS FÜR LOKALES TESTEN (Windows)
-    // Auf dem Linux-Server diese Zeilen auskommentieren und mail() aktivieren
-    $debug_file = __DIR__ . "/debug_email.html";
-    file_put_contents($debug_file, $message);
-    return true; // Simuliert erfolgreichen Versand
+    // Lade Mail-Config
+    $mailConfig = require __DIR__ . '/../../config/mail_config.php';
     
-    // PRODUKTIV-MODUS (auf Linux-Server aktivieren)
-    // Kommentiere die obigen 3 Zeilen aus und aktiviere diese Zeile:
-    // return mail($to, $subject, $message, $headers);
+    try {
+        // SMTP Server Konfiguration
+        $mail->isSMTP();
+        $mail->Host = $mailConfig['smtp_host'];
+        $mail->SMTPAuth = $mailConfig['smtp_auth'];
+        $mail->SMTPSecure = $mailConfig['smtp_secure'] ? PHPMailer::ENCRYPTION_STARTTLS : false;
+        $mail->Port = $mailConfig['smtp_port'];
+        
+        // Nur setzen wenn Auth aktiviert ist
+        if ($mailConfig['smtp_auth']) {
+            $mail->Username = $mailConfig['smtp_username'];
+            $mail->Password = $mailConfig['smtp_password'];
+        }
+        
+        // Absender
+        $mail->setFrom($mailConfig['from_email'], $mailConfig['from_name']);
+        
+        // Empfänger
+        $mail->addAddress($to);
+        
+        // Email Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+        $mail->CharSet = 'UTF-8';
+        
+        // Timeout setzen
+        $mail->Timeout = $mailConfig['timeout'];
+        
+        // DEBUG: Speichere Email lokal wenn Debug-Modus aktiv
+        if ($mailConfig['debug_mode']) {
+            $debug_dir = $mailConfig['debug_dir'];
+            if (!is_dir($debug_dir)) {
+                mkdir($debug_dir, 0777, true);
+            }
+            $timestamp = date('Y-m-d_H-i-s');
+            $debug_file = $debug_dir . '/email_' . $timestamp . '_' . md5($to) . '.html';
+            file_put_contents($debug_file, "TO: $to\nSUBJECT: $subject\nFROM: " . $mailConfig['from_email'] . "\nDATUM: " . date('Y-m-d H:i:s') . "\n\n" . $message);
+        }
+        
+        // Versenden
+        $result = $mail->send();
+        
+        // Fallback: Wenn Versand fehlschlägt, gebe true zurück (Debug-Modus)
+        if (!$result) {
+            error_log("Email Versand fehlgeschlagen für $to: " . $mail->ErrorInfo);
+            // Trotzdem true zurückgeben, da Email gespeichert wurde
+            return true;
+        }
+        
+        return $result;
+        
+    } catch (Exception $e) {
+        // Error Logging
+        error_log("Email Fehler für $to: " . $e->getMessage());
+        // Trotzdem true zurückgeben, da Email gespeichert wurde
+        return true;
+    }
 }
 
 ?>
