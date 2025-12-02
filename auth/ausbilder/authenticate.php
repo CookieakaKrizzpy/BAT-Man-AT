@@ -3,14 +3,13 @@
 // Email-Versand-Funktion einbinden
 require_once "send_mail.php";
 
-// Nachname + Vorname vom Dashboard 
-$nachname = isset($_POST["nachname"]) ? trim($_POST["nachname"]) : "";
-$vorname = isset($_POST["vorname"]) ? trim($_POST["vorname"]) : "";
+// Ausbilder_ID vom Dashboard 
+$ausbilder_id = isset($_POST["ausbilder_id"]) ? (int)$_POST["ausbilder_id"] : 0;
 
-if (empty($nachname) || empty($vorname)) {
+if (empty($ausbilder_id)) {
     echo json_encode([
         "status" => "failure",
-        "message" => "Bitte Nachname und Vorname angeben"
+        "message" => "Bitte Ausbilder-ID angeben"
     ]);
     exit(); 
 }
@@ -18,14 +17,12 @@ if (empty($nachname) || empty($vorname)) {
 // SQL Abfrage Tabelle Ausbilder (mit EMail und Geschlecht)
 $sql = "SELECT Ausbilder_ID, Nachname, Vorname, EMail, Geschlecht
         FROM Ausbilder
-        WHERE LOWER(Nachname) = LOWER(:nachname)
-        AND LOWER(Vorname) = LOWER(:vorname)
+        WHERE Ausbilder_ID = :ausbilder_id
         LIMIT 1";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    "nachname" => $nachname,
-    "vorname" => $vorname
+    "ausbilder_id" => $ausbilder_id
 ]);
 
 $user = $stmt->fetch();
