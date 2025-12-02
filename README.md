@@ -270,7 +270,7 @@ php -S localhost:8000
 
 **Teilnehmer-Login:**
 ```powershell
-Invoke-WebRequest -Uri "http://192.168.9.123/it202407/auth/login.php" -Method POST -Body @{
+Invoke-WebRequest -Uri "http://***.***.***.***/it202407/auth/login.php" -Method POST -Body @{
     login_type="Teilnehmer"; 
     reha_nr="90104"; 
     passwort="test"
@@ -279,7 +279,7 @@ Invoke-WebRequest -Uri "http://192.168.9.123/it202407/auth/login.php" -Method PO
 
 **Ausbilder-Login:**
 ```powershell
-Invoke-WebRequest -Uri "http://192.168.9.123/it202407/auth/login.php" -Method POST -Body @{
+Invoke-WebRequest -Uri "http://***.***.***.***/it202407/auth/login.php" -Method POST -Body @{
     login_type="Ausbilder"; 
     ausbilder_id="2"
 }
@@ -292,8 +292,8 @@ Invoke-WebRequest -Uri "http://192.168.9.123/it202407/auth/login.php" -Method PO
 ### SMTP-Einstellungen (send_mail.php)
 
 ```php
-$mail->Host       = 'smtp.strato.de';
-$mail->Username   = 'it-ausbildung@bfw-neueslernen.de';
+$mail->Host       = 'smtp.DIENSTLEISTER.de';
+$mail->Username   = 'dein-username';
 $mail->Password   = 'dein-passwort';
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port       = 587;
