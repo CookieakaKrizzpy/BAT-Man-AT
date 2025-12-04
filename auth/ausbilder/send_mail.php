@@ -17,8 +17,8 @@ require __DIR__ . '/../../vendor/autoload.php';
  */
 function sendTokenEmail($to, $token, $geschlecht, $nachname) {
     // TODO: Dashboard-URL eintragen
-    $dashboard_url = "PLATZHALTER_DASHBOARD_URL";
-    $link = $dashboard_url . "?token=" . urlencode($token);
+    $dashboard_url = "http://192.168.9.123/it202407/index.php";
+    $link = $dashboard_url . "?tok=" . urlencode($token);
     
     // Anrede formatieren
     $anrede = ($geschlecht == "Herr") ? "Sehr geehrter Herr" : "Sehr geehrte Frau";
@@ -216,7 +216,7 @@ function sendTokenEmail($to, $token, $geschlecht, $nachname) {
         $mail->CharSet = 'UTF-8';
         
         // Embed BFW Logo
-        $logoPath = __DIR__ . '/../assets/icon/Logo_BFW_Nuernberg.svg';
+        $logoPath = __DIR__ . '/../../assets/icon/Logo_BFW_Nuernberg.svg';
         if (file_exists($logoPath)) {
             $mail->addEmbeddedImage($logoPath, 'bfw_logo', 'Logo_BFW_Nuernberg.svg');
         }
@@ -242,7 +242,8 @@ function sendTokenEmail($to, $token, $geschlecht, $nachname) {
         if (!$result) {
             error_log("Email Versand fehlgeschlagen für $to: " . $mail->ErrorInfo);
             // Trotzdem true zurückgeben, da Email gespeichert wurde
-            return true;
+            //Bei Fehler false zurück da wir eine eigene Fehlerbehandlung haben
+            return false;
         }
         
         return $result;
@@ -251,7 +252,10 @@ function sendTokenEmail($to, $token, $geschlecht, $nachname) {
         // Error Logging
         error_log("Email Fehler für $to: " . $e->getMessage());
         // Trotzdem true zurückgeben, da Email gespeichert wurde
-        return true;
+
+        //Anmerkung TEAM BACKEND
+        //Bei Fehler false zurück da wir eine eigene Fehlerbehandlung haben
+        return false;
     }
 }
 
