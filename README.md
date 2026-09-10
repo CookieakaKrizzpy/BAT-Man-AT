@@ -39,7 +39,7 @@ BAT-Man-AT/
 
 ---
 
-## � Authentifizierungsflows
+## 🔐 Authentifizierungsflows
 
 ### Ausbilder (Magic Link)
 
@@ -219,7 +219,7 @@ Response:
 
 ---
 
-## �️ Datenbank-Schema
+## 🗄️ Datenbank-Schema
 
 ### Ausbilder-Tabelle
 
@@ -348,6 +348,6 @@ Generiert Bcrypt-Hashes für manuelle Passwort-Erstellung in der Datenbank.
 
 ---
 
-## � Lizenz
+## 📄 Lizenz
 
 Internes BfW-Projekt - Alle Rechte vorbehalten
